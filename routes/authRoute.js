@@ -47,7 +47,7 @@ router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
 router.get("/cart", authMiddleware, getUserCart);
 
-router.get("/:id", authMiddleware, isAdmin, getaUser);
+router.get("/:id", authMiddleware, getaUser);
 router.delete("/empty-cart", authMiddleware, emptyCart);
 router.delete("/:id", deleteaUser);
 router.put(
