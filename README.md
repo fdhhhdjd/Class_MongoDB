@@ -7,7 +7,7 @@
 <a href = "mailto:nguyentientai10@gmail.com"><img src="https://img.icons8.com/fluency/48/000000/send-mass-email.png" alt="License"></a>
 </p>
 
-# Note: This is source code purpose to teacher !!!!
+# Note: This is source code purpose to teach more simple !!!!
 
 ## Study With Me: Class MongoDB
 
