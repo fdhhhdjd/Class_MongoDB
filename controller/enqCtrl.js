@@ -1,5 +1,8 @@
-const Enquiry = require("../models/enqModel");
+//* LIB
 const asyncHandler = require("express-async-handler");
+
+//* REQUIRED
+const Enquiry = require("../models/enqModel");
 const validateMongoDbId = require("../utils/validateMongodbId");
 
 const createEnquiry = asyncHandler(async (req, res) => {
@@ -10,6 +13,7 @@ const createEnquiry = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const updateEnquiry = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -22,6 +26,7 @@ const updateEnquiry = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const deleteEnquiry = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -32,6 +37,7 @@ const deleteEnquiry = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const getEnquiry = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -42,6 +48,7 @@ const getEnquiry = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const getallEnquiry = asyncHandler(async (req, res) => {
   try {
     const getallEnquiry = await Enquiry.find();
@@ -50,6 +57,7 @@ const getallEnquiry = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 module.exports = {
   createEnquiry,
   updateEnquiry,

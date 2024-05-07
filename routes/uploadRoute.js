@@ -1,4 +1,7 @@
+//* LIB
 const express = require("express");
+
+//* REQUIRED
 const { uploadImages, deleteImages } = require("../controller/uploadCtrl");
 const { isAdmin, authMiddleware } = require("../middlewares/authMiddleware");
 const { uploadPhoto, productImgResize } = require("../middlewares/uploadImage");

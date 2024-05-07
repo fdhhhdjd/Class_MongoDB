@@ -1,9 +1,12 @@
-const Blog = require("../models/blogModel");
-const User = require("../models/userModel");
+//* LIB
 const asyncHandler = require("express-async-handler");
+const fs = require("fs");
+
+//* REQUIRED
+const Blog = require("../models/blogModel");
 const validateMongoDbId = require("../utils/validateMongodbId");
 const cloudinaryUploadImg = require("../utils/cloudinary");
-const fs = require("fs");
+
 const createBlog = asyncHandler(async (req, res) => {
   try {
     const newBlog = await Blog.create(req.body);
@@ -33,7 +36,7 @@ const getBlog = asyncHandler(async (req, res) => {
     const getBlog = await Blog.findById(id)
       .populate("likes")
       .populate("dislikes");
-    const updateViews = await Blog.findByIdAndUpdate(
+    await Blog.findByIdAndUpdate(
       id,
       {
         $inc: { numViews: 1 },
@@ -45,6 +48,7 @@ const getBlog = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const getAllBlogs = asyncHandler(async (req, res) => {
   try {
     const getBlogs = await Blog.find();
@@ -111,6 +115,7 @@ const liketheBlog = asyncHandler(async (req, res) => {
     res.json(blog);
   }
 });
+
 const disliketheBlog = asyncHandler(async (req, res) => {
   const { blogId } = req.body;
   validateMongoDbId(blogId);

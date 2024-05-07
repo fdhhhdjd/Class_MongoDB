@@ -1,3 +1,4 @@
+//* LIB
 const fs = require("fs");
 const asyncHandler = require("express-async-handler");
 
@@ -25,10 +26,11 @@ const uploadImages = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const deleteImages = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
-   cloudinaryDeleteImg(id, "images");
+    cloudinaryDeleteImg(id, "images");
     res.json({ message: "Deleted" });
   } catch (error) {
     throw new Error(error);

@@ -1,7 +1,10 @@
+//* LIB
+const slugify = require("slugify");
+const asyncHandler = require("express-async-handler");
+
+//* REQUIRED
 const Product = require("../models/productModel");
 const User = require("../models/userModel");
-const asyncHandler = require("express-async-handler");
-const slugify = require("slugify");
 const validateMongoDbId = require("../utils/validateMongodbId");
 
 const createProduct = asyncHandler(async (req, res) => {
@@ -17,15 +20,19 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   validateMongoDbId(id);
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
     }
-    const updateProduct = await Product.findOneAndUpdate({ _id: id }, req.body, {
-      new: true,
-    });
+    const updateProduct = await Product.findOneAndUpdate(
+      { _id: id },
+      req.body,
+      {
+        new: true,
+      }
+    );
     res.json(updateProduct);
   } catch (error) {
     throw new Error(error);
@@ -33,7 +40,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 });
 
 const deleteProduct = asyncHandler(async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   validateMongoDbId(id);
   try {
     const deleteProduct = await Product.findOneAndDelete(id);
@@ -99,6 +106,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const addToWishlist = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { prodId } = req.body;
@@ -142,7 +150,7 @@ const rating = asyncHandler(async (req, res) => {
       (userId) => userId.postedby.toString() === _id.toString()
     );
     if (alreadyRated) {
-      const updateRating = await Product.updateOne(
+      await Product.updateOne(
         {
           ratings: { $elemMatch: alreadyRated },
         },
@@ -154,7 +162,7 @@ const rating = asyncHandler(async (req, res) => {
         }
       );
     } else {
-      const rateProduct = await Product.findByIdAndUpdate(
+      await Product.findByIdAndUpdate(
         prodId,
         {
           $push: {
@@ -170,20 +178,21 @@ const rating = asyncHandler(async (req, res) => {
         }
       );
     }
-    const getallratings = await Product.findById(prodId);
-    let totalRating = getallratings.ratings.length;
-    let ratingsum = getallratings.ratings
+
+    const getAllRatings = await Product.findById(prodId);
+    let totalRating = getAllRatings.ratings.length;
+    let ratingSum = getAllRatings.ratings
       .map((item) => item.star)
       .reduce((prev, curr) => prev + curr, 0);
-    let actualRating = Math.round(ratingsum / totalRating);
-    let finalproduct = await Product.findByIdAndUpdate(
+    let actualRating = Math.round(ratingSum / totalRating);
+    let finalProduct = await Product.findByIdAndUpdate(
       prodId,
       {
-        totalrating: actualRating,
+        totalRating: actualRating,
       },
       { new: true }
     );
-    res.json(finalproduct);
+    res.json(finalProduct);
   } catch (error) {
     throw new Error(error);
   }

@@ -1,16 +1,19 @@
+//* LIB
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+const uniqid = require("uniqid");
+
+//* REQUIRED
+
 const User = require("../models/userModel");
 const Product = require("../models/productModel");
 const Cart = require("../models/cartModel");
 const Coupon = require("../models/couponModel");
 const Order = require("../models/orderModel");
-const uniqid = require("uniqid");
-
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("../config/jwtToken");
 const validateMongoDbId = require("../utils/validateMongodbId");
 const { generateRefreshToken } = require("../config/refreshtoken");
-const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
 const sendEmail = require("./emailCtrl");
 
 // Create a User ----------------------------------------------
@@ -46,7 +49,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   const findUser = await User.findOne({ email });
   if (findUser && (await findUser.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findUser?._id);
-    const updateuser = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       findUser.id,
       {
         refreshToken: refreshToken,
@@ -135,11 +138,12 @@ const logout = asyncHandler(async (req, res) => {
     });
     return res.sendStatus(204); // forbidden
   }
-  await User.findOneAndUpdate({ refreshToken: refreshToken }, {
-    refreshToken: "",
-  });
-  
-  console.log('run11`');
+  await User.findOneAndUpdate(
+    { refreshToken: refreshToken },
+    {
+      refreshToken: "",
+    }
+  );
 
   res.clearCookie("refreshToken", {
     httpOnly: true,
@@ -263,7 +267,7 @@ const unblockUser = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
 
   try {
-    const unblock = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       id,
       {
         isBlocked: false,
@@ -462,7 +466,7 @@ const createOrder = asyncHandler(async (req, res) => {
         },
       };
     });
-    const updated = await Product.bulkWrite(update, {});
+    await Product.bulkWrite(update, {});
     res.json({ message: "success" });
   } catch (error) {
     throw new Error(error);

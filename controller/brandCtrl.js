@@ -1,5 +1,8 @@
-const Brand = require("../models/brandModel");
+//* LIB
 const asyncHandler = require("express-async-handler");
+
+//* REQUIRED
+const Brand = require("../models/brandModel");
 const validateMongoDbId = require("../utils/validateMongodbId");
 
 const createBrand = asyncHandler(async (req, res) => {
@@ -10,6 +13,7 @@ const createBrand = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const updateBrand = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -22,6 +26,7 @@ const updateBrand = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const deleteBrand = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -32,6 +37,7 @@ const deleteBrand = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const getBrand = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -42,7 +48,8 @@ const getBrand = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-const getallBrand = asyncHandler(async (req, res) => {
+
+const getallBrand = asyncHandler(async (_, res) => {
   try {
     const getallBrand = await Brand.find();
     res.json(getallBrand);
@@ -50,6 +57,7 @@ const getallBrand = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 module.exports = {
   createBrand,
   updateBrand,

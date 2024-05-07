@@ -1,6 +1,9 @@
-const User = require("../models/userModel");
+//* LIB
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
+
+//* REQUIRED
+const User = require("../models/userModel");
 
 const authMiddleware = asyncHandler(async (req, res, next) => {
   let token;
@@ -20,6 +23,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
     throw new Error(" There is no token attached to header");
   }
 });
+
 const isAdmin = asyncHandler(async (req, res, next) => {
   const { email } = req.user;
   const adminUser = await User.findOne({ email });

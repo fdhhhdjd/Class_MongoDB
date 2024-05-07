@@ -1,3 +1,4 @@
+//* LIB
 const nodemailer = require("nodemailer");
 const asyncHandler = require("express-async-handler");
 
@@ -6,14 +7,14 @@ const sendEmail = asyncHandler(async (data, req, res) => {
     host: "smtp.gmail.com",
     port: 465,
     secure: true, // true for 465, false for other ports
-    service: 'gmail',
+    service: "gmail",
     auth: {
       user: process.env.MAIL_ID, // generated ethereal user
       pass: process.env.MP, // generated ethereal password
     },
     tls: {
       rejectUnauthorized: false,
-  },
+    },
   });
 
   // send mail with defined transport object
