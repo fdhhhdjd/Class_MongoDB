@@ -7,7 +7,10 @@
 <a href = "mailto:nguyentientai10@gmail.com"><img src="https://img.icons8.com/fluency/48/000000/send-mass-email.png" alt="License"></a>
 </p>
 
-## Study With Me: Backend API Ecommerce Free
+# Note: This is source code purpose to teacher !!!!
+
+## Study With Me: Class MongoDB
+
 ## Team Word: Liên hệ công việc https://profile-forme.cf
 
 ## 1. Nguyễn Tiến Tài ( Maintanin 🚩).
